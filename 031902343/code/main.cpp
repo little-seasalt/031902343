@@ -1,6 +1,13 @@
 #include "ChineseMatch.h"
 #include "pinyin.h"
 #include <iostream>
+#include <vector>
+#include <map>
+#include <Windows.h>
+#include <string>
+#include <locale>
+#include <codecvt>
+#include <algorithm>
 using namespace std;
 vector<textans> ans, ans1;
 bool cmp(textans x, textans y) {
@@ -44,8 +51,10 @@ int main(const int argc,char* argv[])
 	total = ans1.size();
 	cout << "Total: " << total << endl;
 	setlocale(LC_ALL, "chs");
-	for (int i = 0; i < total; i++)
-		wcout << ans1[i].anstext << endl;
+	std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
+	for (int i = 0; i < total; i++) {
+		cout << converter.to_bytes(ans1[i].anstext) << endl;
+	}
 	end = clock();
 	ret = double(end - begin) / CLOCKS_PER_SEC;
 	cout << "runtime:   " << ret << endl;
